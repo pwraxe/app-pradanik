@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Pradānika</string>
+    <string name="ad_id">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="app_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <string name="str_open">Open</string>
+    <string name="str_whats_app">WhatsApp</string>
+    <string name="str_open_n_whats_app">Open\nWhatsApp</string>
+    <string name="str_open_whats_app">Open WhatsApp</string>
+    <string name="str_scan">Scan</string>
+    <string name="str_qr_code">QR Code</string>
+    <string name="str_scan_n_qr_code">Scan\nQR Code</string>
+    <string name="str_scan_qr_code">Scan QR Code</string>
+    <string name="str_scan_codes">Scan\nCodes</string>
+    <string name="str_bar_code">Barcode</string>
+    <string name="str_scan_bar_code">Scan Barcode</string>
+    <string name="str_whatsapp_icon">WhatsApp Icon</string>
+    <string name="str_developer_info">Developer Info</string>
+    <string name="str_app_info">App Info</string>
+    <string name="str_history">History</string>
+    <string name="str_clear_all">Clear All</string>
+    <string name="str_remove_history">Remove History</string>
+    <string name="str_search_your_country">Search your country</string>
+    <string name="str_oops_no_whatsapp_installed">Oops, No WhatsApp installed</string>
+    <string name="str_invalid_mobile">Invalid Mobile</string>
+    <string name="str_copy_scanned_content_button">Copy Scanned Content Button</string>
+    <string name="str_copied">Copied</string>
+    <string name="str_qr_code_barcode_many_more">QR Code, Barcode, Many more…</string>
+    <string name="str_share_data_with">Share Data With</string>
+    <string name="str_about">About</string>
+    <string name="str_connect">Connect</string>
+    <string name="str_follow">Follow</string>
+    <string name="str_visit">Visit</string>
+</resources>
