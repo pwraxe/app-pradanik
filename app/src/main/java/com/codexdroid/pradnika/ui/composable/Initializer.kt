@@ -31,6 +31,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.codexdroid.pradnika.R
+import com.codexdroid.pradnika.ui.theme.Purple40
+import com.codexdroid.pradnika.ui.theme.Purple80
 import com.codexdroid.pradnika.utils.FontFamilyType
 import com.codexdroid.pradnika.utils.NavigateTo
 import com.codexdroid.pradnika.utils.getAppFont
@@ -53,8 +55,8 @@ fun Initializer(
 
     var isAdShown by remember { mutableStateOf(false) }
 
-    Surface (modifier = modifier.fillMaxSize()){
-        Column(modifier = modifier) {
+    Surface (modifier = modifier.fillMaxSize().background(color = Purple80)){
+        Column(modifier = modifier.background(color = Color.Gray)) {
 
             Spacer(modifier = modifier.padding(top = 10.dp))
 

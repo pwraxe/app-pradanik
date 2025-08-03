@@ -13,21 +13,8 @@ import com.google.gson.reflect.TypeToken
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-
-/**
- * load json
- *
- * add data store in app
- * add room database
- * save data in room database
- * load data from room
- *
- *
- */
 
 
 enum class FontFamilyType {
@@ -73,8 +60,6 @@ fun isWhatsAppInstalled(context: Context) : Boolean {
 }
 
 fun openWhatsApp(context: Context, mobile: String) {
-
-
     val url = "https://api.whatsapp.com/send?phone=$mobile"
     val intent = Intent(Intent.ACTION_VIEW)
     intent.data = Uri.parse(url)
