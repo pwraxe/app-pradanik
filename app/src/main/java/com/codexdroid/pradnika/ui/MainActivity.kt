@@ -5,19 +5,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
 import com.codexdroid.pradnika.ui.composable.Initializer
 import com.codexdroid.pradnika.ui.composable.SplashScreen
 import com.codexdroid.pradnika.ui.theme.PradānikaTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,17 +25,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
         enableEdgeToEdge()
+        super.onCreate(savedInstanceState)
         setContent {
             MobileAds.initialize(this)
             PradānikaTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    LetsStart()
-                }
+                val systemUiController = rememberSystemUiController()
+                systemUiController.setStatusBarColor(color = Color.White)
+                LetsStart( modifier = Modifier.fillMaxSize())
             }
         }
     }

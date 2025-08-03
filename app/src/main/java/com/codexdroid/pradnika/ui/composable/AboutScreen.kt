@@ -1,18 +1,19 @@
 package com.codexdroid.pradnika.ui.composable
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
@@ -41,8 +42,7 @@ fun AboutScreenPreview(modifier: Modifier = Modifier) {
     AboutScreen()
 }
 @Composable
-fun AboutScreen(modifier: Modifier = Modifier) {
-
+fun AboutScreen(modifier: Modifier = Modifier.windowInsetsPadding(WindowInsets.systemBars).background(color = Color.White)) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     Column (modifier = modifier.fillMaxSize()) {
@@ -53,14 +53,16 @@ fun AboutScreen(modifier: Modifier = Modifier) {
             text = context.getString(R.string.str_about),//stringResource(R.string.str_about),
             fontSize = 16.sp,
             fontFamily = getAppFont(FontFamilyType.REGULAR),
-            modifier = modifier.align(alignment = Alignment.CenterHorizontally)
+            modifier = modifier.align(alignment = Alignment.CenterHorizontally),
+            color = Color.Black
         )
 
         Text(
             text = stringResource(R.string.app_name),
             fontSize = 26.sp,
             fontFamily = getAppFont(FontFamilyType.BOLD),
-            modifier = modifier.align(alignment = Alignment.CenterHorizontally)
+            modifier = modifier.align(alignment = Alignment.CenterHorizontally),
+            color = Color.Black
         )
 
         Spacer(modifier = modifier.padding(bottom = 20.dp))
@@ -71,7 +73,8 @@ fun AboutScreen(modifier: Modifier = Modifier) {
                     text = it,
                     fontSize = 14.sp,
                     fontFamily = getAppFont(FontFamilyType.REGULAR),
-                    modifier = modifier.padding(horizontal = 10.dp, vertical = 5.dp)
+                    modifier = modifier.padding(horizontal = 10.dp, vertical = 5.dp),
+                    color = Color.Black
                 )
             }
         }
@@ -80,7 +83,8 @@ fun AboutScreen(modifier: Modifier = Modifier) {
             text = "Connect With Developer",
             fontSize = 16.sp,
             fontFamily = getAppFont(FontFamilyType.BOLD),
-            modifier = modifier.padding(start = 10.dp, top = 20.dp)
+            modifier = modifier.padding(start = 10.dp, top = 20.dp),
+            color = Color.Black
         )
 
 
@@ -123,7 +127,8 @@ fun SocialItems(social: Social, onClick:(Social) -> Unit,
                 text = stringResource(social.name),
                 textAlign = TextAlign.Center,
                 fontFamily = getAppFont(FontFamilyType.REGULAR),
-                modifier = modifier.padding(6.dp)
+                modifier = modifier.padding(6.dp),
+                color = Color.Black
             )
         }
     }

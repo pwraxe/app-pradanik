@@ -11,14 +11,14 @@ plugins {
 
 android {
     namespace = "com.codexdroid.pradnika"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.codexdroid.pradnika"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 2
-        versionName = "2.0"
+        targetSdk = 35
+        versionCode = 3
+        versionName = "2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
@@ -87,6 +87,8 @@ dependencies {
     implementation(libs.zxing.android.embedded)
 
     implementation(libs.play.services.ads)
+
+    implementation(libs.accompanist.systemuicontroller)
 
 }
 

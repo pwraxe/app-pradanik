@@ -1,8 +1,10 @@
 package com.codexdroid.pradnika.ui.composable
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,13 +12,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,29 +35,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.codexdroid.pradnika.R
+import com.codexdroid.pradnika.ui.theme.PradānikaTheme
 import com.codexdroid.pradnika.utils.FontFamilyType
 import com.codexdroid.pradnika.utils.getAppFont
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.contracts.contract
 
-@Preview
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL,
+    showBackground = true
+)
 @Composable
 fun QRCodeScreenPreview() {
-    QRCodeScreen()
+    PradānikaTheme {
+        QRCodeScreen()
+    }
 }
 
 @Composable
-fun QRCodeScreen(modifier: Modifier = Modifier) {
+fun QRCodeScreen(modifier: Modifier = Modifier.background(color = Color.White)) {
 
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
     val coroutineScope = rememberCoroutineScope()
     var qrCodeData by remember { mutableStateOf("") }
     var isCopied by remember { mutableStateOf(false) }
-    val launcher = rememberLauncherForActivityResult(contract = ScanContract()) {result ->
+    val launcher = rememberLauncherForActivityResult(contract = ScanContract()) { result ->
         result?.let {
             it.contents?.let {
                 qrCodeData = result.contents
@@ -65,55 +70,57 @@ fun QRCodeScreen(modifier: Modifier = Modifier) {
 
         }
     }
-    Column(modifier = modifier
-        .fillMaxSize()
-        .padding(10.dp)) {
+    Column(modifier = modifier.fillMaxSize().padding(10.dp)) {
 
         Text(
             text = stringResource(R.string.str_scan),
-            fontFamily = getAppFont(FontFamilyType.REGULAR)
+            fontFamily = getAppFont(FontFamilyType.REGULAR),
+            color = Color.Black
         )
         Text(
             text = stringResource(R.string.str_qr_code_barcode_many_more),
             fontFamily = getAppFont(FontFamilyType.BOLD),
-            fontSize = 20.sp
+            fontSize = 20.sp,
+            color = Color.Black
         )
 
-        Button(
-            onClick = {
-                val option = ScanOptions().apply {
-                    setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
-                    setPrompt("Scan QR Code")
-                    setCameraId(0)
-                    setBeepEnabled(true)
-                    setBarcodeImageEnabled(true)
-                    setOrientationLocked(true)
-                }
-                launcher.launch(option)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black
-            ),
-            modifier = modifier
-                .align(
-                    alignment = Alignment.CenterHorizontally
+
+        ExtendedFloatingActionButton(onClick = {
+            val option = ScanOptions().apply {
+                setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES)
+                setPrompt("Scan Code")
+                setCameraId(0)
+                setBeepEnabled(true)
+                setBarcodeImageEnabled(true)
+                setOrientationLocked(true)
+            }
+            launcher.launch(option)
+        }, modifier = modifier.align(alignment = Alignment.CenterHorizontally).padding(top = 30.dp)) {
+            Row (verticalAlignment = Alignment.CenterVertically){
+                Spacer(modifier.padding(start = 6.dp))
+                Text(
+                    text = stringResource(R.string.str_scan_qr_code),
+                    fontFamily = getAppFont(FontFamilyType.REGULAR),
+                    color = Color.Black
                 )
-                .padding(top = 30.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.str_scan_qr_code),
-                fontFamily = getAppFont(FontFamilyType.REGULAR),
-            )
+            }
         }
 
         Spacer(modifier = modifier.padding(top = 10.dp))
 
         if (qrCodeData.isNotEmpty()) {
-            Row(horizontalArrangement = Arrangement.End, modifier = modifier.align(alignment = Alignment.End)) {
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = modifier.align(alignment = Alignment.End)
+            ) {
 
                 IconButton(onClick = {
                     clipboardManager.setText(AnnotatedString(qrCodeData))
-                    Toast.makeText(context, context.getString(R.string.str_copied), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context.getString(R.string.str_copied),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     isCopied = true
                     coroutineScope.launch {
                         delay(2000)
@@ -123,9 +130,10 @@ fun QRCodeScreen(modifier: Modifier = Modifier) {
                 ) {
 
                     Icon(
-                        painter = painterResource(if(isCopied) R.drawable.ic_copy_after else R.drawable.ic_copy_be4),
+                        painter = painterResource(if (isCopied) R.drawable.ic_copy_after else R.drawable.ic_copy_be4),
                         contentDescription = stringResource(R.string.str_copy_scanned_content_button),
-                        modifier = modifier.size(20.dp)
+                        modifier = modifier.size(20.dp),
+                        tint = Color.Black
                     )
                 }
 
@@ -147,14 +155,16 @@ fun QRCodeScreen(modifier: Modifier = Modifier) {
                     Icon(
                         painter = painterResource(R.drawable.ic_share),
                         contentDescription = stringResource(R.string.str_copy_scanned_content_button),
-                        modifier = modifier.size(20.dp)
+                        modifier = modifier.size(20.dp),
+                        tint = Color.Black
                     )
                 }
             }
             Text(
                 text = qrCodeData,
                 fontSize = 14.sp,
-                fontFamily = getAppFont(FontFamilyType.REGULAR)
+                fontFamily = getAppFont(FontFamilyType.REGULAR),
+                color = Color.Black
             )
         }
     }

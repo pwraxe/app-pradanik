@@ -1,6 +1,7 @@
 package com.codexdroid.pradnika.ui.composable
 
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +29,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -55,6 +56,7 @@ import com.codexdroid.pradnika.room.Country
 import com.codexdroid.pradnika.room.RoomViewModel
 import com.codexdroid.pradnika.room.TableSearchHistory
 import com.codexdroid.pradnika.room.ViewModelProvider
+import com.codexdroid.pradnika.ui.theme.Purple80
 import com.codexdroid.pradnika.utils.FontFamilyType
 import com.codexdroid.pradnika.utils.getAppFont
 import com.codexdroid.pradnika.utils.isWhatsAppInstalled
@@ -70,7 +72,7 @@ fun WhatsAppScreenPreview() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WhatsAppScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier.background(color = Color.White),
     roomViewModel: RoomViewModel = viewModel(factory = ViewModelProvider.factory)
 ) {
 
@@ -88,8 +90,6 @@ fun WhatsAppScreen(
     }
 
     var openModalBottomSheet by remember { mutableStateOf(false) }
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true, confirmValueChange = { true })
-
 
     Column (modifier = modifier.fillMaxSize()) {
 
@@ -100,12 +100,14 @@ fun WhatsAppScreen(
             Column(modifier = modifier.weight(1f)) {
                 Text(
                     text = stringResource(R.string.str_open),
-                    fontFamily = getAppFont(FontFamilyType.REGULAR)
+                    fontFamily = getAppFont(FontFamilyType.REGULAR),
+                    color = Color.Black
                 )
                 Text(
                     text = stringResource(R.string.str_whats_app),
                     fontFamily = getAppFont(FontFamilyType.BOLD),
-                    fontSize = 20.sp
+                    fontSize = 20.sp,
+                    color = Color.Black
                 )
             }
         }
@@ -120,13 +122,15 @@ fun WhatsAppScreen(
                     Text(
                         text = selectedCountry.code,
                         fontFamily = getAppFont(FontFamilyType.REGULAR),
-                        modifier = modifier.padding(8.dp)
+                        modifier = modifier.padding(8.dp),
+                        color = Color.Black
                     )
                 }
                 OutlinedTextField(
                     value = mobile,
                     onValueChange = { mobile = it },
                     modifier = modifier.fillMaxWidth(),
+                    textStyle = TextStyle(color = Color.Black),
                     keyboardOptions = KeyboardOptions.Default.copy(
                         keyboardType = KeyboardType.Phone,
                         imeAction = ImeAction.Done,
@@ -166,14 +170,15 @@ fun WhatsAppScreen(
                     return@Button
                 }
             },
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
+                colors = ButtonDefaults.buttonColors(containerColor = Purple80),
                 modifier = modifier
                     .align(alignment = Alignment.End)
                     .padding(top = 4.dp)
                     .fillMaxWidth()) {
                 Text(
                     stringResource(R.string.str_open),
-                    fontFamily = getAppFont(FontFamilyType.REGULAR))
+                    fontFamily = getAppFont(FontFamilyType.REGULAR),
+                    color = Color.Black)
             }
         }
 
@@ -183,6 +188,7 @@ fun WhatsAppScreen(
                 text = stringResource(R.string.str_history),
                 fontFamily = getAppFont(FontFamilyType.BOLD),
                 fontSize = 24.sp,
+                color = Color.Black
             )
 
             Spacer(modifier = modifier.weight(1f))
@@ -193,14 +199,15 @@ fun WhatsAppScreen(
                 Text(
                     text = stringResource(R.string.str_clear_all),
                     fontFamily = getAppFont(FontFamilyType.REGULAR),
-                    fontSize = 14.sp)
+                    fontSize = 14.sp,
+                    color = Color.Black)
             }
         }
 
         LazyColumn {
             items(history) {
-                HistoryItem(it,{
-                    roomViewModel.remove(it)
+                HistoryItem(it,{ history ->
+                    roomViewModel.remove(history)
                 })
             }
         }
@@ -214,8 +221,10 @@ fun WhatsAppScreen(
                     value = searchContent,
                     onValueChange = {searchContent = it},
                     label = {
-                        Text(text = stringResource(R.string.str_search_your_country))
+                        Text(text = stringResource(R.string.str_search_your_country),
+                            color = Color.Gray)
                     },
+                    textStyle = TextStyle(color = Color.Black),
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(10.dp),
@@ -282,7 +291,8 @@ fun HistoryItem(
             }) {
                 Text(text = "${history.countryCode} ${history.mobile}",
                     fontFamily = getAppFont(FontFamilyType.REGULAR),
-                    fontWeight = FontWeight.W800
+                    fontWeight = FontWeight.W800,
+                    color = Color.Black
                 )
             }
 
@@ -290,7 +300,8 @@ fun HistoryItem(
             Text(
                 text = history.getTime(), //"10 July 2024, 05:12 PM",
                 fontFamily = getAppFont(FontFamilyType.REGULAR),
-                fontSize = 14.sp
+                fontSize = 14.sp,
+                color = Color.Black
             )
 
             IconButton(onClick = {
@@ -298,7 +309,8 @@ fun HistoryItem(
             }) {
                 Icon(painter = painterResource(R.drawable.ic_close),
                     contentDescription = stringResource(R.string.str_remove_history),
-                    modifier = modifier.size(30.dp)
+                    modifier = modifier.size(30.dp),
+                    tint = Color.Black
                 )
             }
         }
@@ -327,13 +339,15 @@ fun CountryItem(country: Country,
             Text(
                 text = country.code,
                 fontFamily = getAppFont(FontFamilyType.REGULAR),
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = Color.Black
             )
             Spacer(modifier = modifier.padding(horizontal = 10.dp))
             Text(
                 text = country.name,
                 fontFamily = getAppFont(FontFamilyType.REGULAR),
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = Color.Black
             )
         }
 
